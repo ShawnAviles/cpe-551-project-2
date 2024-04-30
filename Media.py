@@ -3,7 +3,6 @@
 # Date: 5/5/24
 # Description: 
 
-
 class Media:
     def __init__(self, newID, title, averageRating):
         """
