@@ -28,9 +28,9 @@ class Show(Media):
         :param yearReleased: Year the show was released
         :type yearReleased: int
         :param rating: Rating of the show
-        :type rating: float
+        :type rating: string
         :param duration: Duration of the show
-        :type duration: int
+        :type duration: string
         :param genres: Genres of the show
         :type genres: string
         :param description: Description of the show
