@@ -1,7 +1,12 @@
+# "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
+# Author: Shawn Aviles, Justin Ferber, Harris Pyo
+# Date: 5/5/24
+# Description: 
+
 from Media import Media
 
 class Show(Media):
-    def __init__(self, newID, title, averageRating, showType, directors, actors, countryCode, dateAdded, yearReleased, rating, duration, genres, description):
+    def __init__(self, newID, title, averageRating, showType, director, actors, countryCode, dateAdded, yearReleased, rating, duration, genres, description):
         """
         Constructor for Show class
         :param newID: ID of the show
@@ -23,9 +28,9 @@ class Show(Media):
         :param yearReleased: Year the show was released
         :type yearReleased: int
         :param rating: Rating of the show
-        :type rating: float
+        :type rating: string
         :param duration: Duration of the show
-        :type duration: int
+        :type duration: string
         :param genres: Genres of the show
         :type genres: string
         :param description: Description of the show
@@ -35,7 +40,7 @@ class Show(Media):
         """
         super().__init__(newID, title, averageRating)
         self.__showType = showType
-        self.__directors = directors
+        self.__director = director
         self.__actors = actors
         self.__countryCode = countryCode
         self.__dateAdded = dateAdded
@@ -54,13 +59,13 @@ class Show(Media):
         """
         return self.__showType
     
-    def getDirectors(self):
+    def getDirector(self):
         """
         Get the directors of the show
         :return: Directors of the show
         :rtype: string
         """
-        return self.__directors
+        return self.__director
     
     def getActors(self):
         """
@@ -136,14 +141,14 @@ class Show(Media):
         """
         self.__showType = newShowType
         
-    def setDirectors(self, newDirectors):
+    def setDirector(self, newDirector):
         """
         Set the directors of the show
         :param newDirectors: New directors of the show
         :type newDirectors: string
         :return: None
         """
-        self.__directors = newDirectors
+        self.__director = newDirector
     
     def setActors(self, newActors):
         """

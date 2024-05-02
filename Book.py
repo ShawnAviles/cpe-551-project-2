@@ -1,7 +1,12 @@
+# "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
+# Author: Shawn Aviles, Justin Ferber, Harris Pyo
+# Date: 5/5/24
+# Description: 
+
 from Media import Media
 
 class Book(Media):
-    def __init__(self, newID, title, averageRating, author, isbn, isbn13, language, pages, ratings, publicationDate, publisher):
+    def __init__(self, newID, title, averageRating, authors, isbn, isbn13, language, pages, ratings, publicationDate, publisher):
         """
         Constructor for Book class
         :param newID: ID of the book
@@ -30,7 +35,7 @@ class Book(Media):
         :rtype: Book
         """
         super().__init__(newID, title, averageRating)
-        self.__author = author
+        self.__authors = authors
         self.__isbn = isbn
         self.__isbn13 = isbn13
         self.__language = language
@@ -40,13 +45,13 @@ class Book(Media):
         self.__publisher = publisher
         
     # Accessor functions
-    def getAuthor(self):
+    def getAuthors(self):
         """
         Get the author of the book
         :return: Author of the book
         :rtype: string
         """
-        return self.__author
+        return self.__authors
     
     def getISBN(self):
         """
@@ -105,14 +110,14 @@ class Book(Media):
         return self.__publisher
     
     # Mutator functions
-    def setAuthor(self, newAuthor):
+    def setAuthors(self, newAuthors):
         """
         Set the author of the book
         :param newAuthor: New author of the book
         :type newAuthor: string
         :return: None
         """
-        self.__author = newAuthor
+        self.__authors = newAuthors
         
     def setISBN(self, newISBN):
         """
