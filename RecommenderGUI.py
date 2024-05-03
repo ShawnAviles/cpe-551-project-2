@@ -16,17 +16,18 @@ class RecommenderGUI():
         self.main_window.geometry("1200x800")
 
         # Lower button frame
+        # Needed to be created before the notebook so that the notebook or it would not be shown
         self.buttonFrame = tk.Frame(self.main_window)
         self.loadShowsButton = tk.Button(self.buttonFrame, text="Load Shows", command=self.loadShows)
         self.loadBooksButton = tk.Button(self.buttonFrame, text="Load Books", command=self.loadBooks)
         self.loadAssociationsButton = tk.Button(self.buttonFrame, text="Load Associations", command=self.loadAssociations)
         self.creditInfoBoxButton = tk.Button(self.buttonFrame, text="Credit Info Box", command=self.creditInfoBox)
         self.quitButton = tk.Button(self.buttonFrame, text="Quit", command=self.main_window.destroy)
-        self.loadShowsButton.pack(side=tk.LEFT, padx=100)
-        self.loadBooksButton.pack(side=tk.LEFT, padx=100)
-        self.loadAssociationsButton.pack(side=tk.LEFT, padx=100)
-        self.creditInfoBoxButton.pack(side=tk.LEFT, padx=100)
-        self.quitButton.pack(side=tk.LEFT, padx=100)
+        self.loadShowsButton.pack(side=tk.LEFT, expand=1)
+        self.loadBooksButton.pack(side=tk.LEFT, expand=1)
+        self.loadAssociationsButton.pack(side=tk.LEFT, expand=1)
+        self.creditInfoBoxButton.pack(side=tk.LEFT, expand=1)
+        self.quitButton.pack(side=tk.LEFT, expand=1)
         self.buttonFrame.pack(side=tk.BOTTOM, fill=tk.X)
 
         # Create notebook
@@ -175,6 +176,12 @@ class RecommenderGUI():
         print("searching shows")
 
     def getRecommendations(self):
+        """
+        This function gets the recommendations for the user based on the type of media and title they input. It uses
+        the functions from the instance of the Recommender class to get the recommendations and display them in the text box.
+        The function is called when the user clicks the "Get Recommendations" button.
+        :return: None
+        """
         typeMedia = self.recommendationsTypeCombo.get()
         titleMedia = self.recommendationsTitleEntry.get()
         associations = self.__recommender.getRecommendations(typeOfMedia=typeMedia, title=titleMedia)
@@ -184,6 +191,13 @@ class RecommenderGUI():
         self.recommendationsText.configure(state=tk.DISABLED)
     
     def loadShows(self):
+        """
+        This function loads the TV shows and movies from the CSV files and displays them in the text boxes. It also
+        loads the statistics for the TV shows and movies and displays them in the corresponding text boxes. To do this, 
+        it uses the functions from the instance of the Recommender class to get the data from the user. The function is called
+        when the user clicks the "Load Shows" button.
+        :return: None
+        """
         self.__recommender.loadShows()
         result = self.__recommender.getTVList()
         self.showsText.configure(state=tk.NORMAL)
@@ -207,6 +221,12 @@ class RecommenderGUI():
         self.moviesStatsText.configure(state=tk.DISABLED)
     
     def loadBooks(self):
+        """
+        This function loads the books from the user input CSV file and displays them in the text box. The function also
+        loads the statistics for the books and displays them in the corresponding text box. To do this, it uses the functions
+        getBookList and getBookStats from the instance of the Recommender class.
+        :return: None
+        """
         self.__recommender.loadBooks()
         result = self.__recommender.getBookList()
         self.booksText.configure(state=tk.NORMAL)
@@ -220,9 +240,17 @@ class RecommenderGUI():
         self.booksStatsText.configure(state=tk.DISABLED)
     
     def loadAssociations(self):
+        """
+        This function just calls the loadAssociations function from the instance of the Recommender class to load the associations based
+        on the user input association file. It does not display anything to the user, and is called when the user clicks the "Load Associations" button.
+        :return: None
+        """
         self.__recommender.loadAssociations()
     
     def creditInfoBox(self):
+        """
+        This function displays a messagebox with the credit information for the program when the user clicks the "Credit Info Box" button.
+        """
         messagebox.showinfo("Credit Information", "This program was created by Shawn Aviles, Justin Ferber, and Harris Pyo.\nThe project was completed on May 5, 2024.")
     
 def main():

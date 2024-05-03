@@ -377,6 +377,16 @@ class Recommender:
     print("Search Books")
 
   def getRecommendations(self, typeOfMedia, title):
+    """
+    This function takes in a type of media and a title and returns a formatted string with all the recommendations
+    for the title based on the associations between books and shows/movies.
+    :param typeOfMedia: The type of media that the title is
+    :param typeOfMedia type: string
+    :param title: The title of the media
+    :param title type: string
+    :return: A formatted string with all the recommendations for the title
+    :return type: string
+    """
     if typeOfMedia == "Movie" or typeOfMedia == "TV Show":
       if self.__bookDict != {}:
         for idShow, show in self.__showDict.items():
