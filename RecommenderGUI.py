@@ -6,6 +6,7 @@
 from Recommender import Recommender
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 class RecommenderGUI():
     def __init__(self):
@@ -222,7 +223,7 @@ class RecommenderGUI():
         self.__recommender.loadAssociations()
     
     def creditInfoBox(self):
-        print("credit info box")
+        messagebox.showinfo("Credit Information", "This program was created by Shawn Aviles, Justin Ferber, and Harris Pyo.\nThe project was completed on May 5, 2024.")
     
 def main():
     RecommenderGUI()
