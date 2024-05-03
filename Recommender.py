@@ -8,6 +8,10 @@ from Show import Show
 from tkinter import filedialog
 import os
 from tkinter import messagebox
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 
 class Recommender:
   def __init__(self):
@@ -415,6 +419,49 @@ class Recommender:
         return "No results"
       else:
         return "Enter shows first to get recommendations"
+      
+  # def getMovieChart(self):
+  #   ratings = {}
+  #   for show in self.__showDict:
+  #     if (self.__showDict[show].getShowType() == "Movie"):
+  #       #Rating Part
+  #       if (self.__showDict[show].getRating() not in ratings):
+  #         if ((self.__showDict[show].getRating() == "") and ("None" not in ratings)):
+  #           ratings["None"] = 1
+  #         elif ((self.__showDict[show].getRating() == "") and ("None" in ratings)):
+  #           ratings["None"] += 1
+  #         else:
+  #           ratings[self.__showDict[show].getRating()] = 1
+  #       else:
+  #           ratings[self.__showDict[show].getRating()] += 1
+  #   nums = []
+  #   keys = []
+  #   totalCount = 0
+  #   for rating, count in ratings.items():
+  #     totalCount += count
+  #     nums.append(count)
+  #     keys.append(rating)
+  #   graphNums = np.array(nums) / totalCount * 100
+  #   fig = Figure(figsize=(5, 5), dpi=100)
+  #   ax = fig.add_subplot()
+  #   ax.pie(graphNums, labels=keys, autopct='%1.1f%%')
+  #   return fig
+
+  # def getShowChart(self):
+  #   ratings = {}
+  #   for movie in self.__showDict:
+  #     if (self.__showDict[movie].getShowType() == "TV Show"):
+  #       #Rating Part
+  #       if (self.__showDict[movie].getRating() not in ratings):
+  #         if ((self.__showDict[movie].getRating() == "") and ("None" not in ratings)):
+  #           ratings["None"] = 1
+  #         elif ((self.__showDict[movie].getRating() == "") and ("None" in ratings)):
+  #           ratings["None"] += 1
+  #         else:
+  #           ratings[self.__showDict[movie].getRating()] = 1
+  #       else:
+  #           ratings[self.__showDict[movie].getRating()] += 1
+  #   return ratings
   
 # def main():
 #   recommender = Recommender()
@@ -434,5 +481,7 @@ class Recommender:
 #   print(result)
 #   result = recommender.getMovieStats()
 #   print(result)
+#   print(recommender.getMovieChart())
+#   print(recommender.getShowChart())
 
 # main()

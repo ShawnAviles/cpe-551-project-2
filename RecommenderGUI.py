@@ -7,6 +7,7 @@ from Recommender import Recommender
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import Canvas
 
 class RecommenderGUI():
     def __init__(self):
@@ -168,6 +169,15 @@ class RecommenderGUI():
         self.recommendationsButton.pack(side=tk.LEFT)
         self.recommendationsText.pack(side=tk.TOP, expand=1, fill=tk.BOTH)        
         self.nb.add(self.recommendations, text="Recommendations")
+
+        # Plots frame
+        self.ratings = ttk.Frame(self.nb)
+        self.graphCanvas = Canvas(self.ratings)
+        self.graph2Canvas = Canvas(self.ratings)
+        self.graphCanvas.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
+        self.graph2Canvas.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
+        self.nb.add(self.ratings, text="Ratings")
+
 
     def searchShows(self):
         print("searching shows")
