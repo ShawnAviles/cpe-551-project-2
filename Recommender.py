@@ -367,23 +367,32 @@ class Recommender:
     formattedString += "Most Prolific Author: " + bestAuthor + "\n\n"
     formattedString += "Most Prolific Publisher: " + bestPublisher
     return formattedString
+  
+  def searchTVMovies():
+    print("Search TV Movies")
+
+  def searchBooks():
+    print("Search Books")
+
+  def getRecommendations():
+    print("Get Recommendations")
 
 
-def main():
-  recommender = Recommender()
-  recommender.loadBooks()
-  result = recommender.getBookList()
-  print(result)
-  result = recommender.getBookStats()
-  print(result)
-  recommender.loadShows()
-  result = recommender.getTVList()
-  print(result)
-  result = recommender.getTVStats()
-  print(result)
-  result = recommender.getMovieList()
-  print(result)
-  result = recommender.getMovieStats()
-  print(result)
+# def main():
+#   recommender = Recommender()
+#   recommender.loadBooks()
+#   result = recommender.getBookList()
+#   print(result)
+#   result = recommender.getBookStats()
+#   print(result)
+#   recommender.loadShows()
+#   result = recommender.getTVList()
+#   print(result)
+#   result = recommender.getTVStats()
+#   print(result)
+#   result = recommender.getMovieList()
+#   print(result)
+#   result = recommender.getMovieStats()
+#   print(result)
 
-main()
+# main()
