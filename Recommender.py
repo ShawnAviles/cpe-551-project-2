@@ -7,6 +7,7 @@ from Book import Book
 from Show import Show
 from tkinter import filedialog
 import os
+from tkinter import messagebox
 
 class Recommender:
   def __init__(self):
@@ -66,10 +67,11 @@ class Recommender:
     This function creates a file dialog with dkinter to allow the user to upload a csv file for data on associations between books and shows/movies and stores the data in an association dictionary
     :return: None
     """
-    file = filedialog.askopenfilename(mode='r', title="Input File", filetypes=(("csv files", "*.csv")))
+    file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     if (not file):
       while (not file): 
-        file = filedialog.askopenfilename(mode='r', title="Input File", filetypes=(("csv files", "*.csv")))
+        file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
+    file = open(file, "r")
     for line in file:
       formattedLine = line.strip().split(",")
       if (formattedLine[0] not in self.__associations):
@@ -374,12 +376,40 @@ class Recommender:
   def searchBooks():
     print("Search Books")
 
-  def getRecommendations():
-    print("Get Recommendations")
-
-
+  def getRecommendations(self, typeOfMedia, title):
+    if typeOfMedia == "Movie" or typeOfMedia == "TV Show":
+      if self.__bookDict != {}:
+        for idShow, show in self.__showDict.items():
+          if show.getTitle() == title:
+            result = ""
+            if idShow in self.__associations:
+              for currentID in self.__associations[idShow]:
+                if currentID in self.__bookDict:
+                  result += f"Title:\n{self.__bookDict[currentID].getTitle()}\nAuthor:\n{self.__bookDict[currentID].getAuthors()}\nAverage Rating:\n{self.__bookDict[currentID].getAverageRating()}\nISBN:\n{self.__bookDict[currentID].getISBN()}\nISBN13:\n{self.__bookDict[currentID].getISBN13()}\nLanguage Code:\n{self.__bookDict[currentID].getLanguage()}\nPages:\n{self.__bookDict[currentID].getPages()}\nRating Count:\n{self.__bookDict[currentID].getRatings()}\nPublication Date:\n{self.__bookDict[currentID].getPublicationDate()}\nPublisher:\n{self.__bookDict[currentID].getPublisher()}\n\n********************************\n\n"
+            return result
+        messagebox.showwarning("Error", "Title does not have any recommendations")
+        return "No results"
+      else:
+        return "Enter books first to get recommendations"
+    else:
+      if self.__showDict != {}:
+        for idBook, book in self.__bookDict.items():
+          if book.getTitle() == title:
+            result = ""
+            if idBook in self.__associations:
+              for currentID in self.__associations[idBook]:
+                if currentID in self.__showDict:
+                  result += f"Title:\n{self.__showDict[currentID].getTitle()}\nDirector:\n{self.__showDict[currentID].getDirector()}\nActors:\n{self.__showDict[currentID].getActors()}\nAverage Rating:\n{self.__showDict[currentID].getAverageRating()}\nCountry Code:\n{self.__showDict[currentID].getCountryCode()}\nDate Added:\n{self.__showDict[currentID].getDateAdded()}\nYear Released:\n{self.__showDict[currentID].getYearReleased()}\nRating:\n{self.__showDict[currentID].getRating()}\nDuration:\n{self.__showDict[currentID].getDuration()}\nGenres:\n{self.__showDict[currentID].getGenres()}\nDescription:\n{self.__showDict[currentID].getDescription()}\n\n********************************\n\n"
+            return result
+        messagebox.showwarning("Error", "Title does not have any recommendations")
+        return "No results"
+      else:
+        return "Enter shows first to get recommendations"
+  
 # def main():
 #   recommender = Recommender()
+#   recommender.loadShows()
+#   recommender.loadAssociations()
 #   recommender.loadBooks()
 #   result = recommender.getBookList()
 #   print(result)

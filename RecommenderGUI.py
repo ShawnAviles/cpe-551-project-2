@@ -174,16 +174,52 @@ class RecommenderGUI():
         print("searching shows")
 
     def getRecommendations(self):
-        print("getting recommendations")
+        typeMedia = self.recommendationsTypeCombo.get()
+        titleMedia = self.recommendationsTitleEntry.get()
+        associations = self.__recommender.getRecommendations(typeOfMedia=typeMedia, title=titleMedia)
+        self.recommendationsText.configure(state=tk.NORMAL)
+        self.recommendationsText.delete("1.0", tk.END)
+        self.recommendationsText.insert("1.0", associations)
+        self.recommendationsText.configure(state=tk.DISABLED)
     
     def loadShows(self):
-        print("loading shows")
+        self.__recommender.loadShows()
+        result = self.__recommender.getTVList()
+        self.showsText.configure(state=tk.NORMAL)
+        self.showsText.delete("1.0", tk.END)
+        self.showsText.insert("1.0", result)
+        self.showsText.configure(state=tk.DISABLED)
+        statsResult = self.__recommender.getTVStats()
+        self.showsStatsText.configure(state=tk.NORMAL)
+        self.showsStatsText.delete("1.0", tk.END)
+        self.showsStatsText.insert("1.0", statsResult)
+        self.showsStatsText.configure(state=tk.DISABLED)
+        movieResult = self.__recommender.getMovieList()
+        self.moviesText.configure(state=tk.NORMAL)
+        self.moviesText.delete("1.0", tk.END)
+        self.moviesText.insert("1.0", movieResult)
+        self.moviesText.configure(state=tk.DISABLED)
+        movieStatsResult = self.__recommender.getMovieStats()
+        self.moviesStatsText.configure(state=tk.NORMAL)
+        self.moviesStatsText.delete("1.0", tk.END)
+        self.moviesStatsText.insert("1.0", movieStatsResult)
+        self.moviesStatsText.configure(state=tk.DISABLED)
     
     def loadBooks(self):
-        print("loading books")
+        self.__recommender.loadBooks()
+        result = self.__recommender.getBookList()
+        self.booksText.configure(state=tk.NORMAL)
+        self.booksText.delete("1.0", tk.END)
+        self.booksText.insert("1.0", result)
+        self.booksText.configure(state=tk.DISABLED)
+        statsResult = self.__recommender.getBookStats()
+        self.booksStatsText.configure(state=tk.NORMAL)
+        self.booksStatsText.delete("1.0", tk.END)
+        self.booksStatsText.insert("1.0", statsResult)
+        self.booksStatsText.configure(state=tk.DISABLED)
     
     def loadAssociations(self):
-        print("loading associations")
+        self.__recommender.loadAssociations()
     
     def creditInfoBox(self):
         print("credit info box")
