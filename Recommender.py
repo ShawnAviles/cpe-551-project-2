@@ -1,16 +1,14 @@
 # "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
 # Author: Shawn Aviles, Justin Ferber, Harris Pyo
 # Date: 5/5/24
-# Description: 
+# Description:
 
 from Book import Book
 from Show import Show
 from tkinter import filedialog
 import os
 from tkinter import messagebox
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
-import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 
 class Recommender:
@@ -29,11 +27,14 @@ class Recommender:
     This function creates a file dialog with tkinter to allow the user to upload a csv file for data on books and stores the data in a book dictionary
     :return: None
     """
+    #Prompt the user for the file and keep prompting if the file is not valid/doesn't exist
     file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     if (not file):
       while (not file): 
         file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     file = open(file, "r")
+
+    #Iterate through the file and create a new book object for each line and add it to the book dicitonary
     current = 0
     for line in file:
       if (current != 0):
@@ -50,11 +51,14 @@ class Recommender:
     This function creates a file dialog with tkinter to allow the user to upload a csv file for data on shows/movies and stores the data in a show dictionary
     :return: None
     """
+    #Prompt the user for the file and keep prompting if the file is not valid/doesn't exist
     file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     if (not file):
       while (not file): 
         file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     file = open(file, "r")
+
+    #Iterate through the file and create a new show object for each line and add it to the book dicitonary
     current = 0
     for line in file:
       if (current != 0):
@@ -71,11 +75,14 @@ class Recommender:
     This function creates a file dialog with dkinter to allow the user to upload a csv file for data on associations between books and shows/movies and stores the data in an association dictionary
     :return: None
     """
+    #Prompt the user for the file and keep prompting if the file is not valid/doesn't exist
     file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     if (not file):
       while (not file): 
         file = filedialog.askopenfilename(title="Input File", initialdir=os.getcwd(), filetypes=(("csv files", "*.csv"),))
     file = open(file, "r")
+
+    #Iterate through the file twice and to create an association both ways and add it to the dictionary
     for line in file:
       formattedLine = line.strip().split(",")
       if (formattedLine[0] not in self.__associations):
@@ -104,6 +111,7 @@ class Recommender:
     formattedString = ""
     largestTitle = 0
     largestRuntime = 0
+    #Find the longest string of movie titles and movie runtimes to get length for each column
     for movie in self.__showDict:
       if (self.__showDict[movie].getShowType() == "Movie"):
         if (len(self.__showDict[movie].getTitle()) > largestTitle):
@@ -111,6 +119,7 @@ class Recommender:
         if (len(self.__showDict[movie].getDuration()) > largestRuntime):
           largestRuntime = len(self.__showDict[movie].getDuration())
 
+    #Print the columns of movie titles with their runtimes 
     formattedString += format("Title", str(largestTitle + 2)) + format("Runtime", str(largestRuntime)) + "\n"
     for movie in self.__showDict:
       if (self.__showDict[movie].getShowType() == "Movie"):
@@ -127,6 +136,7 @@ class Recommender:
     formattedString = ""
     largestTitle = 0
     largestSeason = 0
+    #Find the longest string of show titles and show seasons to get length for each column
     for show in self.__showDict:
       if (self.__showDict[show].getShowType() == "TV Show"):
         if (len(self.__showDict[show].getTitle()) > largestTitle):
@@ -134,6 +144,7 @@ class Recommender:
         if (len(self.__showDict[show].getDuration()) > largestSeason):
           largestSeason = len(self.__showDict[show].getDuration())
     
+    #Print the columns of show titles with their number of seasons 
     formattedString += format("Title", str(largestTitle + 2)) + format("Seasons", str(largestSeason)) + "\n"
     for show in self.__showDict:
       if (self.__showDict[show].getShowType() == "TV Show"):
@@ -150,12 +161,14 @@ class Recommender:
     formattedString = ""
     largestTitle = 0
     largestAuthor = 0
+    #Find the longest string of book titles and book authors to get length for each column
     for book in self.__bookDict:
       if (len(self.__bookDict[book].getTitle()) > largestTitle):
         largestTitle = len(self.__bookDict[book].getTitle())
       if (len(self.__bookDict[book].getAuthors()) > largestAuthor):
         largestAuthor = len(self.__bookDict[book].getAuthors())
     
+    #Print the columns of book titles with their authors
     formattedString += format("Title", str(largestTitle + 2)) + format("Author(s)", str(largestAuthor)) + "\n"
     for book in self.__bookDict:
       formattedString += format(self.__bookDict[book].getTitle(), str(largestTitle + 2)) + format(self.__bookDict[book].getAuthors(), str(largestAuthor)) + "\n"
@@ -181,6 +194,8 @@ class Recommender:
     count = 0
     total = 0
     formattedString = "Ratings:\n"
+
+    #Iterate through the movies to get the count for each rating, director, actor, and genre. Store it in dictionaries to determine ones with highest count
     for movie in self.__showDict:
       if (self.__showDict[movie].getShowType() == "Movie"):
         #Rating Part
@@ -241,6 +256,7 @@ class Recommender:
                 bestGenre = genre
         count += 1
 
+    #Add all the stats to the formatted string
     for rating in ratings:
       formattedString += rating + " " + str(format(ratings[rating]/count * 100, ".2f")) + "%" + "\n"
     formattedString += "\nAverage Movie Duration: " + str(format(total/count, ".2f")) + " minutes\n\n"
@@ -266,6 +282,8 @@ class Recommender:
     total = 0
     count = 0
     formattedString = "Ratings:\n"
+
+    #Iterate through the show to get the count for each rating, seasons, actor, and genre. Store it in dictionaries to determine ones with highest count
     for show in self.__showDict:
       if (self.__showDict[show].getShowType() == "TV Show"):
         #Rating Part
@@ -313,6 +331,7 @@ class Recommender:
                 bestGenre = genre
         count += 1
 
+    #Add all the stats to the formatted string
     for rating in ratings:
       formattedString += rating + " " + str(format(ratings[rating]/count * 100, ".2f")) + "%" + "\n"
     formattedString += "\nAverage Number of Seasons: " + str(format(total/count, ".2f")) + " seasons\n\n"
@@ -336,6 +355,7 @@ class Recommender:
     publisherMax = 0
     bestPublisher = ""
     formattedString = ""
+    #Iterate through the movies to get the count for each page, author, and publisher. Store it in dictionaries to determine ones with highest count
     for book in self.__bookDict:
       #Page Part
       total += int(self.__bookDict[book].getPages())
@@ -369,6 +389,7 @@ class Recommender:
             bestPublisher = self.__bookDict[book].getPublisher()
       count += 1
 
+    #Add all the stats to the formatted string
     formattedString += "Average Page Count: " + str(format(total/count, ".2f")) + " pages\n\n"
     formattedString += "Most Prolific Author: " + bestAuthor + "\n\n"
     formattedString += "Most Prolific Publisher: " + bestPublisher
@@ -420,48 +441,65 @@ class Recommender:
       else:
         return "Enter shows first to get recommendations"
       
-  # def getMovieChart(self):
-  #   ratings = {}
-  #   for show in self.__showDict:
-  #     if (self.__showDict[show].getShowType() == "Movie"):
-  #       #Rating Part
-  #       if (self.__showDict[show].getRating() not in ratings):
-  #         if ((self.__showDict[show].getRating() == "") and ("None" not in ratings)):
-  #           ratings["None"] = 1
-  #         elif ((self.__showDict[show].getRating() == "") and ("None" in ratings)):
-  #           ratings["None"] += 1
-  #         else:
-  #           ratings[self.__showDict[show].getRating()] = 1
-  #       else:
-  #           ratings[self.__showDict[show].getRating()] += 1
-  #   nums = []
-  #   keys = []
-  #   totalCount = 0
-  #   for rating, count in ratings.items():
-  #     totalCount += count
-  #     nums.append(count)
-  #     keys.append(rating)
-  #   graphNums = np.array(nums) / totalCount * 100
-  #   fig = Figure(figsize=(5, 5), dpi=100)
-  #   ax = fig.add_subplot()
-  #   ax.pie(graphNums, labels=keys, autopct='%1.1f%%')
-  #   return fig
+  def getMovieChart(self):
+    ratings = {}
+    for show in self.__showDict:
+      if (self.__showDict[show].getShowType() == "Movie"):
+        #Get ratings for each movie and store in a dictionary
+        if (self.__showDict[show].getRating() not in ratings):
+          if ((self.__showDict[show].getRating() == "") and ("None" not in ratings)):
+            ratings["None"] = 1
+          elif ((self.__showDict[show].getRating() == "") and ("None" in ratings)):
+            ratings["None"] += 1
+          else:
+            ratings[self.__showDict[show].getRating()] = 1
+        else:
+            ratings[self.__showDict[show].getRating()] += 1
+    nums = []
+    keys = []
+    totalCount = 0
+    #Making arrays for values and keys of rating and their counts to be used to create the matplotlib pie chart
+    for rating, count in ratings.items():
+      totalCount += count
+      nums.append(count)
+      keys.append(rating)
+    graphNums = np.array(nums) / totalCount * 100
+    fig = Figure(figsize=(5, 5), dpi=100)
+    ax = fig.add_subplot()
+    ax.pie(graphNums, labels=keys, autopct='%1.1f%%')
+    ax.set_title("Rating Percentages for Movies")
+    #Return the figure/pie chart to be inserted into the TKinter Canvas
+    return fig
 
-  # def getShowChart(self):
-  #   ratings = {}
-  #   for movie in self.__showDict:
-  #     if (self.__showDict[movie].getShowType() == "TV Show"):
-  #       #Rating Part
-  #       if (self.__showDict[movie].getRating() not in ratings):
-  #         if ((self.__showDict[movie].getRating() == "") and ("None" not in ratings)):
-  #           ratings["None"] = 1
-  #         elif ((self.__showDict[movie].getRating() == "") and ("None" in ratings)):
-  #           ratings["None"] += 1
-  #         else:
-  #           ratings[self.__showDict[movie].getRating()] = 1
-  #       else:
-  #           ratings[self.__showDict[movie].getRating()] += 1
-  #   return ratings
+  def getShowChart(self):
+    ratings = {}
+    for movie in self.__showDict:
+      if (self.__showDict[movie].getShowType() == "TV Show"):
+        #Get ratings for each show and store in a dictionary
+        if (self.__showDict[movie].getRating() not in ratings):
+          if ((self.__showDict[movie].getRating() == "") and ("None" not in ratings)):
+            ratings["None"] = 1
+          elif ((self.__showDict[movie].getRating() == "") and ("None" in ratings)):
+            ratings["None"] += 1
+          else:
+            ratings[self.__showDict[movie].getRating()] = 1
+        else:
+            ratings[self.__showDict[movie].getRating()] += 1
+    nums = []
+    keys = []
+    totalCount = 0
+    #Making arrays for values and keys of rating and their counts to be used to create the matplotlib pie chart
+    for rating, count in ratings.items():
+      totalCount += count
+      nums.append(count)
+      keys.append(rating)
+    graphNums = np.array(nums) / totalCount * 100
+    fig = Figure(figsize=(5, 5), dpi=100)
+    ax = fig.add_subplot()
+    ax.pie(graphNums, labels=keys, autopct='%1.1f%%')
+    ax.set_title("Rating Percentages for Shows")
+    #Return the figure/pie chart to be inserted into the TKinter Canvas
+    return fig
   
 # def main():
 #   recommender = Recommender()
