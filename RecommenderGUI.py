@@ -178,12 +178,49 @@ class RecommenderGUI():
         self.graph2Canvas.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
         self.nb.add(self.ratings, text="Ratings")
 
-
     def searchShows(self):
-        print("searching shows")
-    
+        """
+        This function searches the TV shows and movies based on the user input. It extracts the data from the combo & entry widgets and
+        calls the searchTVMovies function from the instance of the Recommender class. It then displays the results in the text box.
+        The function is called when the user clicks the "Search" button on the "Search Movies/TV" tab.
+        :return: None
+        """
+        # Get the data from the combo + entry widgets
+        typeOfMedia = self.typeCombo.get().strip()
+        title = self.titleEntry.get().strip()
+        director = self.directorEntry.get().strip()
+        actor = self.actorEntry.get().strip()
+        genre = self.genreEntry.get().strip()
+              
+        # Call the searchTVMovies function from the Recommender class instance
+        result = self.__recommender.searchTVMovies(typeOfMedia=typeOfMedia, title=title, director=director, actor=actor, genre=genre)
+        
+        # Display the results in the text box
+        self.searchMoviesShowText.configure(state=tk.NORMAL)
+        self.searchMoviesShowText.delete("1.0", tk.END)
+        self.searchMoviesShowText.insert("1.0", result)
+        self.searchMoviesShowText.configure(state=tk.DISABLED)
+            
     def searchBooks(self):
-        print("searching shows")
+        """
+        This function searches the boooks based on the user input. It extracts the data from the entry widgets and
+        calls the searchBooks function from the instance of the Recommender class. It then displays the results in the text box.
+        The function is called when the user clicks the "Search" button on the "Search Books" tab.
+        :return: None
+        """
+        # Get the data from the combo + entry widgets
+        title = self.bookTitleEntry.get().strip()
+        author = self.bookAuthorEntry.get().strip()
+        publisher = self.bookPublisherEntry.get().strip()
+                
+        # Call the searchBooks function from the Recommender class instance
+        result = self.__recommender.searchBooks(title=title, author=author, publisher=publisher)
+        
+        # Display the results in the text box
+        self.searchBookText.configure(state=tk.NORMAL)
+        self.searchBookText.delete("1.0", tk.END)
+        self.searchBookText.insert("1.0", result)
+        self.searchBookText.configure(state=tk.DISABLED)
 
     def getRecommendations(self):
         """

@@ -374,11 +374,88 @@ class Recommender:
     formattedString += "Most Prolific Publisher: " + bestPublisher
     return formattedString
   
-  def searchTVMovies():
-    print("Search TV Movies")
+  def searchTVMovies(self, typeOfMedia, title, director, actor, genre):
+    """
+    This function takes in a type of media, a title, a director, an actor, and a genre and returns a formatted string with all the 
+    shows/movies that match the criteria
+    :param typeOfMedia: The type of media, either "Movie" or "TV Show"
+    :param typeOfMedia type: string
+    :param title: The title of the media
+    :param title type: string
+    :param director: The director of the media
+    :param director type: string
+    :param actor: The actor in the media
+    :param actor type: string
+    :param genre: The genre of the media
+    :param genre type: string
+    :return: A formatted string with all the shows/movies that match the criteria
+    :return type: string
+    """
+    # If no parameters are given, return an error message
+    if typeOfMedia != "Movie" and typeOfMedia != "TV Show":
+      messagebox.showerror("Error", "Must select Movie or TV Show")
+      return "No Results"
+    
+    if title == "" and director == "" and actor == "" and genre == "":
+      messagebox.showerror("Error", "Must enter information for at least one: Title, Director, Actor, and/or Genre")
+      return "No Results"
+    
+    # search through the show dictionary and select all objects that adhere to the user's data
+    results = []
+    for show in self.__showDict.values():
+      # only check for value match if the search parameter exists (not empty)
+      if (show.getShowType() == typeOfMedia and
+        (title.lower() in show.getTitle().lower() if title else True) and
+        (director.lower() in show.getDirector().lower() if director else True) and
+        (actor.lower() in show.getActors().lower() if actor else True) and
+        (genre.lower() in show.getGenres().lower() if genre else True)):
+        results.append(show)
+    
+    if len(results) == 0:
+      return "No Results Found"
 
-  def searchBooks():
-    print("Search Books")
+    # determine longest strings for proper column width (adding 2 for padding)
+    longest_title = max(len(show.getTitle()) for show in results) + 2
+    longest_director = max(len(show.getDirector()) for show in results) + 2
+    longest_actor = max(len(show.getActors()) for show in results) + 2
+    longest_genre = max(len(show.getGenres()) for show in results) + 2
+    
+    # format the results into a string, header at the top
+    formatted_result = f"{'Title':<{longest_title}}{'Director':<{longest_director}}{'Actors':<{longest_actor}}{'Genre':<{longest_genre}}\n"
+    for show in results:
+      formatted_result += f"{show.getTitle():<{longest_title}}{show.getDirector():<{longest_director}}{show.getActors():<{longest_actor}}{show.getGenres():<{longest_genre}}\n"
+    
+    return formatted_result
+  
+  def searchBooks(self, title, author, publisher):
+    # If no parameters are given, return an error message
+    if title == "" and author== "" and publisher == "":
+      messagebox.showerror("Error", "Please enter information for at least one: Title, Author, and/or Publisher.")
+      return "No Results"
+    
+    # Search through the book dictionary and select all objects that adhere to the user's data
+    results = []
+    for book in self.__bookDict.values():
+      # only check for value match if the search parameter exists
+      if ((title.lower() in book.getTitle().lower() if title else True) and
+          (author.lower() in book.getAuthors().lower() if author else True) and
+          (publisher.lower() in book.getPublisher().lower() if publisher else True)):
+          results.append(book)
+    
+    if len(results) == 0:
+      return "No Results Found"
+    
+    # determine longest strings for proper column width (adding 3 for padding)
+    longest_title = max(len(book.getTitle()) for book in results) + 3
+    longest_author = max(len(book.getAuthors()) for book in results) + 3
+    longest_publisher = max(len(book.getPublisher()) for book in results) + 3
+    
+    # format the results into a string, header at the top
+    formatted_result = f"{'Title':<{longest_title}}{'Author(s)':<{longest_author}}{'Publisher':<{longest_publisher}}\n"
+    for book in results:
+      formatted_result += f"{book.getTitle():<{longest_title}}{book.getAuthors():<{longest_author}}{book.getPublisher():<{longest_publisher}}\n"
+    
+    return formatted_result
 
   def getRecommendations(self, typeOfMedia, title):
     """
