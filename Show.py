@@ -1,7 +1,9 @@
 # "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
 # Author: Shawn Aviles, Justin Ferber, Harris Pyo
 # Date: 5/5/24
-# Description: 
+# Description: This file contains the Show class, which is a subclass of the Media class. 
+# It contains information about a show, such as the type, directors, actors, country code, date added, year released, rating, duration, genres, and description.
+# The respective accessor and mutator functions are also included.
 
 from Media import Media
 
