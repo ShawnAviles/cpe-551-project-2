@@ -1,7 +1,9 @@
 # "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
 # Author: Shawn Aviles, Justin Ferber, Harris Pyo
 # Date: 5/5/24
-# Description: 
+# Description: This file contains the Book class, which is a subclass of the Media class. 
+# It contains information about a book, such as the author, ISBN, language, number of pages, ratings, publication date, and publisher.
+# The respective accessor and mutator functions are also included.
 
 from Media import Media
 

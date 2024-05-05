@@ -1,7 +1,10 @@
 # "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
 # Author: Shawn Aviles, Justin Ferber, Harris Pyo
 # Date: 5/5/24
-# Description: 
+# Description: This file contains the RecommenderGUI class, which is the GUI for the 'Media For You' program. This class has an instance of the Recomender class, 
+# which is used to get and handle the data for the GUI. The user can load the data for the TV shows/ movies and books. The GUI has a notebook with tabs for 
+# TV shows, movies, books, searching (shows and books), recommendations, and ratings. The ratings shows percentage of ratings for movies and tv shows.
+# The user can also view the credit information for the program. The GUI is created using the tkinter library.
 
 from Recommender import Recommender
 import tkinter as tk

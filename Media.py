@@ -1,7 +1,9 @@
 # "I pledge my honor that I have abided by the Stevens Honor System." - Shawn Aviles, Justin Ferber, Harris Pyo
 # Author: Shawn Aviles, Justin Ferber, Harris Pyo
 # Date: 5/5/24
-# Description: 
+# Description: This file contains the Media class, which is a superclass of the Book and Movie classes.
+# It contains information about a piece of media, such as the ID, title, and average rating.
+# The respective accessor and mutator functions are also included.
 
 class Media:
     def __init__(self, newID, title, averageRating):
