@@ -439,6 +439,8 @@ class Recommender:
     # determine longest strings for proper column width (adding 2 for padding)
     longest_title = max(len(show.getTitle()) for show in results) + 2
     longest_director = max(len(show.getDirector()) for show in results) + 2
+    if (longest_director == 2):
+        longest_director = 10
     longest_actor = max(len(show.getActors()) for show in results) + 2
     longest_genre = max(len(show.getGenres()) for show in results) + 2
     
@@ -520,6 +522,13 @@ class Recommender:
         return "Enter shows first to get recommendations"
       
   def getMovieChart(self):
+    """
+    Thus function creates a pie chart of the rating percentages for movies by iterating through the show dictionary 
+    and only looking at the movies to obtain the rating percentages. After the loop, a number array and a key array 
+    are created to store the values and keys of the rating and their counts. These arrays are then used to create the
+    matplotlib pie chart in a figure which is then received by the GUI when the shows are input.
+    :return: A figure of the pie chart of the rating percentages for movies
+    """
     ratings = {}
     for show in self.__showDict:
       if (self.__showDict[show].getShowType() == "Movie"):
@@ -550,6 +559,14 @@ class Recommender:
     return fig
 
   def getShowChart(self):
+    """
+    Thus function creates a pie chart of the rating percentages for shows by iterating through the show dictionary
+    and only looking at the tv shows to obtain the rating percentages and their respective rating. After the loop, 
+    a number array and a key array are created to store the values and keys of the rating and their counts. These 
+    arrays are then used to create the matplotlib pie chart in a figure which is then received by the GUI when the 
+    shows are input.
+    :return: A figure of the pie chart of the rating percentages for shows
+    """
     ratings = {}
     for movie in self.__showDict:
       if (self.__showDict[movie].getShowType() == "TV Show"):
@@ -578,26 +595,3 @@ class Recommender:
     ax.set_title("Rating Percentages for Shows")
     #Return the figure/pie chart to be inserted into the TKinter Canvas
     return fig
-  
-# def main():
-#   recommender = Recommender()
-#   recommender.loadShows()
-#   recommender.loadAssociations()
-#   recommender.loadBooks()
-#   result = recommender.getBookList()
-#   print(result)
-#   result = recommender.getBookStats()
-#   print(result)
-#   recommender.loadShows()
-#   result = recommender.getTVList()
-#   print(result)
-#   result = recommender.getTVStats()
-#   print(result)
-#   result = recommender.getMovieList()
-#   print(result)
-#   result = recommender.getMovieStats()
-#   print(result)
-#   print(recommender.getMovieChart())
-#   print(recommender.getShowChart())
-
-# main()
