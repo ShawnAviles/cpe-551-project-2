@@ -307,10 +307,15 @@ class RecommenderGUI():
     def creditInfoBox(self):
         """
         This function displays a messagebox with the credit information for the program when the user clicks the "Credit Info Box" button.
+        :return: None
         """
         messagebox.showinfo("Credit Information", "This program was created by Shawn Aviles, Justin Ferber, and Harris Pyo.\nThe project was completed on May 5, 2024.")
     
 def main():
+    """
+    Instantiates the RecommenderGUI class and runs the mainloop for the tkinter GUI.
+    :return: None
+    """
     RecommenderGUI()
     tk.mainloop()
 
