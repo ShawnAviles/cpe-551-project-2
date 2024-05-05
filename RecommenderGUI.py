@@ -10,7 +10,7 @@ from Recommender import Recommender
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from tkinter import Canvas
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class RecommenderGUI():
     def __init__(self):
@@ -165,6 +165,7 @@ class RecommenderGUI():
         self.recommendationsText = tk.Text(self.recommendations, wrap=tk.WORD)
         self.recommendationsText.insert("1.0", "Please perform a search to see the data.\nMake sure data has been input as well.")
         self.recommendationsText.configure(state=tk.DISABLED)
+
         # Pack all the widgets
         self.recommendationsTypeFrame.pack(side=tk.TOP, expand=1, fill=tk.X)
         self.recommendationsTitleFrame.pack(side=tk.TOP, expand=1, fill=tk.X)
@@ -175,10 +176,6 @@ class RecommenderGUI():
 
         # Plots frame
         self.ratings = ttk.Frame(self.nb)
-        self.graphCanvas = Canvas(self.ratings)
-        self.graph2Canvas = Canvas(self.ratings)
-        self.graphCanvas.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
-        self.graph2Canvas.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
         self.nb.add(self.ratings, text="Ratings")
 
     def searchShows(self):
@@ -269,6 +266,16 @@ class RecommenderGUI():
         self.moviesStatsText.delete("1.0", tk.END)
         self.moviesStatsText.insert("1.0", movieStatsResult)
         self.moviesStatsText.configure(state=tk.DISABLED)
+
+        # Call functions to get matplotlib chart figures and add them to the canvas
+        # Used online source to make matplotlib pie charts on a TKinter canvas:
+        # https://stackoverflow.com/questions/61494832/embedding-mapplotlib-pie-chart-into-tkinter-gui-issue
+        movieChart = self.__recommender.getMovieChart()
+        showChart = self.__recommender.getShowChart()
+        self.graphCanvas = FigureCanvasTkAgg(movieChart, self.ratings)
+        self.graph2Canvas = FigureCanvasTkAgg(showChart, self.ratings)
+        self.graphCanvas.get_tk_widget().pack(side=tk.LEFT, expand=1, fill=tk.BOTH)
+        self.graph2Canvas.get_tk_widget().pack(side=tk.LEFT, expand=1, fill=tk.BOTH)
     
     def loadBooks(self):
         """
